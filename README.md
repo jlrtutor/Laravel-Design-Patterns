@@ -2,7 +2,7 @@
 
 Ejemplo de aplicación de los distintos patrones de diseño en el Framework Laravel v10.0
 
-### Abstract Factory
+### Creational :: Abstract Factory
 #### 
 El patrón Abstract Factory es un patrón de diseño creacional que proporciona una interfaz para crear familias de objetos relacionados o dependientes sin especificar sus clases concretas. Le permite crear objetos en función de determinadas condiciones o requisitos, lo que la convierte en una solución versátil para gestionar la creación de objetos.
 
@@ -42,5 +42,47 @@ La solución es la siguiente:
 - creamos una interfaz base para la acción de pago que queremos hacer `PaymentGateway`
 - y una implementación de la anterior interfaz por cada tipo de pago disponible (`PaypalPaymentGateway` y `RedsysPaymentGateway`)
 - generamos un `PaymentServiceProvider` que ponga en marcha el tipo adecuado de pago según la configuración o el parámetro que le pasemos.
+
+------
+
+
+### Creational :: Singleton
+#### 
+El patrón Singleton nos asegura una única instancia de un objeto, creando un único punto de entrada al mismo. Aunque pueda parecer una ventaja, hay que utilizarla con cuidado para evitar la rotura de modularidad del código.
+
+#### Casos de Uso
+- Acceso a base de datos mediante una única conexión activa
+- Carga de configuración de la aplicación mediante un único método
+- Registro de Logs, donde una sola clase se encarga de escribir en el Storage los mensajes correspondientes
+- Sistema único de render, dado que muchas veces, el objeto encargado de parsear plantillas es costoso, nos aseguraríamos que sólo existiese una instancia en memoria
+- etc
+
+#### Implementación
+Supongamos que tenemos que crear un sistema de registro de Logs. Como el registro de Logs se realiza en multitud de puntos de la aplicación, no nos conviene que, en cada punto, se cree un nuevo objeto de escritura de Logs, por lo que decidimos que sea de tipo `Singleton`
+
+Creamos una clase Logger con una propiedad protegida `instance` que contenga la instancia única de dicha clase e implementamos el método `register` que comprobará si ya hay una instancia creada o, en caso contrario, se encarga de crear una nueva instancia.
+
+```
+protected static self|null $instance = null;
+```
+
+```
+public static function getInstance(): self
+    {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+
+        return static::$instance;
+    }
+```
+
+#### Uso
+```
+$firstLogger = LoggerSingleton::getInstance(); // Creating first singleton instance
+$secondLogger = LoggerSingleton::getInstance(); // Trying create second singleton instance
+
+// $firstLogger && $secondLogger should be the same object!
+```
 
 ------
