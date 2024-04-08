@@ -3,7 +3,7 @@
 Ejemplo de aplicación de los distintos patrones de diseño en el Framework Laravel v10.0
 
 ### Creational :: Abstract Factory
-#### 
+
 El patrón Abstract Factory es un patrón de diseño creacional que proporciona una interfaz para crear familias de objetos relacionados o dependientes sin especificar sus clases concretas. Le permite crear objetos en función de determinadas condiciones o requisitos, lo que la convierte en una solución versátil para gestionar la creación de objetos.
 
 #### Casos de Uso
@@ -47,7 +47,7 @@ La solución es la siguiente:
 
 
 ### Creational :: Singleton
-#### 
+
 El patrón Singleton nos asegura una única instancia de un objeto, creando un único punto de entrada al mismo. Aunque pueda parecer una ventaja, hay que utilizarla con cuidado para evitar la rotura de modularidad del código.
 
 #### Casos de Uso
@@ -86,3 +86,29 @@ $secondLogger = LoggerSingleton::getInstance(); // Trying create second singleto
 ```
 
 ------
+
+### Creacional :: Builder
+
+Separa la construcción de un objeto complejo de su representación, de modo que el mismo proceso de construcción puede crear diferentes representaciones. Este patrón es especialmente útil cuando un objeto debe ser creado con muchas opciones posibles y configuraciones.
+
+#### Casos de Uso
+- Creación de objetos con múltiples opciones posibles de configuración.
+- Objetos que, para su definición, necesiten usar métodos de encadenamiento.
+- Crear documentos con estructura de bloques (tipo HTML, XML, etc...).
+- Crear menús de comida con personalización del plato (con/sin ingredientes concretos).
+- Configuración de objetos de tipo informático (el resultado del producto depende de múltiples valores de cada tipo de componente).
+
+#### Implementación
+Vamos a crear un objeto de tipo `Coche` en el que, para su definición, hay que indicar la marca, el modelo y el color.
+
+Empezamos creando una interfaz `CarBuilderInterface` que define las acciones sobre el objeto, esto es: setear marca, modelo y color. Y añadimos también un método `getCar` para obtener la información completa del coche.
+
+Creamos una clase `CarBuilder` que implemente dicha interfaz. En los métodos setters `setBrand`, `setModel` y `setColor` retornará el propio objeto que se está definiendo, para que podamos encadenar el uso de estos métodos.
+
+Para usar este patrón, haremos algo parecido a lo siguiente:
+
+```
+$carBuilder = new CarBuilder();
+$europeanCar = $carBuilder->setBrand('Peugeot')->setModel('508')->setColor('White');
+$americanCar = $carBuilder->setBrand('Chevrolet')->setModel('Camaro')->setColor('Grey');
+```

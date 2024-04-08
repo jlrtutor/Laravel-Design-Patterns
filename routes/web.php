@@ -15,3 +15,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/creational/abstract-factory', [\App\Http\Controllers\CreationalAbstractFactory::class, 'index']);
 Route::get('/creational/singleton', [\App\Http\Controllers\CreationalSingleton::class, 'index']);
+Route::get('/creational/builder', [\App\Http\Controllers\CreationalBuilder::class, 'index']);
