@@ -17,3 +17,5 @@ Route::get('/creational/abstract-factory', [\App\Http\Controllers\CreationalAbst
 Route::get('/creational/singleton', [\App\Http\Controllers\CreationalSingleton::class, 'index']);
 Route::get('/creational/builder', [\App\Http\Controllers\CreationalBuilder::class, 'index']);
 Route::get('/creational/factory', [\App\Http\Controllers\CreationalFactory::class, 'index']);
+Route::get('/creational/prototype', [\App\Http\Controllers\CreationalPrototype::class, 'index']);
+

@@ -171,3 +171,18 @@ class Vehicle
     }
 }
 ```
+
+### Creacional :: Prototype
+Este patrón creacional nos permite crear objetos clonando o copiando objetos existentes. En lugar de crear objetos desde cero, podemos usar un prototipo como modelo para crear nuevas instancias.
+
+#### Casos de uso
+- clonar objetos complejos: no sólo se copian las propiedades públicas, sino también las privadas, creando un objeto idéntico en estructura y contenido
+- situaciones donde el alto rendimiento es vital, ya que es más rápido clonar que crear nuevas instancias y rellenar los datos.
+- comportamientos de deshacer/rehacer: como en un editor de dibujo, podemos hacer copias del trabajo antes de cada acción para, llegado el caso, poder deshacer los cambios.
+
+#### Implementación
+Definimos una interfaz `PrototypeInterface` que declara el método `clone()`. 
+
+Creamos una clase `ConcretePrototype` que implementa la interfaz `PrototypeInterface` y que define el comportamiento que tendrá el método `clone()`.
+
+NOTA: PHP ya cuenta con un método interno `__clone()`. Si definimos este método de PHP en las clases, no haría falta apoyarse en una Interfaz.
