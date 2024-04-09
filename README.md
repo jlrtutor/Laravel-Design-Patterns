@@ -112,3 +112,62 @@ $carBuilder = new CarBuilder();
 $europeanCar = $carBuilder->setBrand('Peugeot')->setModel('508')->setColor('White');
 $americanCar = $carBuilder->setBrand('Chevrolet')->setModel('Camaro')->setColor('Grey');
 ```
+
+
+### Creacional :: Factory
+
+```NO confundir con el Abstract Factory Pattern.```
+Este patrón nos ayuda en la creación de objetos de la misma familia cuyos valores internos son diferentes mediante la definición de una interfaz. Desacopla la lógica de creación de la lógica de negocio, evitando al cliente conocer detalles de la instanciación de los objetos de los que depende.
+
+#### Casos de uso
+- Gestión documental: ayuda en la creación de distintos tipos de documentos (PDF, XML, DOC,...). Cada tipo puede necesitar componerse de una manera distinta, así como a la hora de visualzarse.
+- Interfaces de usuario (Themes), donde cada elemento puede construirse y visualizarse de diferente manera según el SO en el que vaya a operar.
+- Conexión universal a base de datos: da igual la base de datos utilizada, se usan los mismos métodos definidos en la interfaz para acceder a cualquier de ellas.
+- Conexión entre servicios: podemos gestionar de la misma manera accesos a terceras partes de otra aplicación sin preocuparnos cómo se conectan por debajo.
+
+#### Implementación
+Para la creación de objetos según un valor dado, podríamos pensar en una estructura `switch/if` que, dependiendo del valor de entrada, instanciaba uno u otro objeto.
+
+```
+switch ($model) {
+    case "car":
+        $wheels = 4;
+        $brand = "Mercedes";
+        $modelObject = new Car($wheels, $brand);
+        break;
+    case "bike":
+        $wheels = 2;
+        $brand = "Kawasaki";
+        $modelObject = new Bike($wheels, $brand);
+        break;
+}
+return $modelObject;
+```
+
+Si queremos añadir nuevas variantes, deberíamos modificar el controlador, que no tiene porqué saber cómo debe instanciarse por debajo cada tipo de objeto y, además, rompe los principios de responsabilidad única y el de abierto/cerrado.
+
+Para solucionar este problema de diseño, crearemos una interfaz que sea común a todos los objetos y que éstos deberán implementar. Añadiremos un `VehicleFactory` que se encargue de crear el objeto del tipo que corresponda, y luego implementaremos las distintas clases que hagan falta.
+
+El controlador, quedaría simplificado de la siguiente manera:
+
+``` 
+class Vehicle
+{
+    private $vehicleFactory;
+    public function __construct(VehicleFactory $vehicleFactory);
+    {
+        $this->vehicleFactory = $vehicleFactory;
+    }
+    public function getVehicleInfo(string $vehicleType)
+    {
+        $vehicle = $this->vehicleFactory->create($vehicleType);
+        $output = 'El vehículo de tipo %s, tiene %s ruedas y es de la marca %s' . PHP_EOL;
+        return sprintf(
+            $output,
+            $vehicleType,
+            $vehicle->getWheels(),
+            $vehicle->getBrand()
+        );       
+    }
+}
+```
