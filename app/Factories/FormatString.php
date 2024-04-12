@@ -2,7 +2,16 @@
 
 namespace App\Factories;
 
-class FormatString
+use App\Contracts\FormatterStaticFactoryInterface;
+
+class FormatString implements FormatterStaticFactoryInterface
 {
 
+    /**
+     * @inheritDoc
+     */
+    public function format(string $input): string
+    {
+        return $input;
+    }
 }

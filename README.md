@@ -186,3 +186,17 @@ Definimos una interfaz `PrototypeInterface` que declara el método `clone()`.
 Creamos una clase `ConcretePrototype` que implementa la interfaz `PrototypeInterface` y que define el comportamiento que tendrá el método `clone()`.
 
 NOTA: PHP ya cuenta con un método interno `__clone()`. Si definimos este método de PHP en las clases, no haría falta apoyarse en una Interfaz.
+
+
+### Creacional :: Static Factory
+Similar al patrón Abstract Factory, la única diferencia es que el patrón Static Factory ofrece un único método estático (llamado `build` o `factory` para crear todos sus distintos objetos disponibles.
+
+#### Casos de uso
+Los mismos que el Abstract Factory
+
+#### Implementación
+Definimos una interfaz `FormatterStaticFactory` que declara un método `format` con un parámetro donde indicaremos el tipo de formateo que deseamos.
+
+Creamos una factoría con un método único estático con un parámetro para definir el tipo de formateo deseado. La implementación de este método estático es la siguiente: comprobar el valor del parámetro para crear el tipo de objeto correspondiente. En caso de no soportar el tipo de formato, lanzaremos una Excepción.
+
+

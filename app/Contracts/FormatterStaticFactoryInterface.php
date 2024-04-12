@@ -2,7 +2,11 @@
 
 namespace App\Contracts;
 
-interface FormatterStaticFactory
+interface FormatterStaticFactoryInterface
 {
-    public function formatter(string $string): string;
+    /**
+     * @param string $input
+     * @return string
+     */
+    public function format(string $input): string;
 }
