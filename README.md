@@ -200,3 +200,22 @@ Definimos una interfaz `FormatterStaticFactory` que declara un método `format` 
 Creamos una factoría con un método único estático con un parámetro para definir el tipo de formateo deseado. La implementación de este método estático es la siguiente: comprobar el valor del parámetro para crear el tipo de objeto correspondiente. En caso de no soportar el tipo de formato, lanzaremos una Excepción.
 
 
+### Creacional :: Pool
+Este patrón nos permite mejorar el rendimiento en el uso constante de objetos reutilizables, puesto que estos objetos se crean una única vez y se almacenan en un `pool` para su posterior consumo.
+
+La idea principal es la de contar con una batería de objetos pre-inicializados y listos para ser usados. Puede añadirse también alguna función de limpieza que recorra el `pool` y borre todos los objetos almacenados.
+
+#### Casos de uso
+- mejorar el rendimiento: crear y destruir objetos complejos puede ser un proceso costoso.
+- mejora en la gestión de recursos: en vez de crear múltiples objetos independientes en memoria, podemos reutilizar los ya creados en el `pool`.
+- limitar el uso de recursos: podemos definir un máximo de objetos disponibles para realizar las tareas.
+
+#### Implementación
+Debemos contemplar tres partes en este patrón:
+- `Client`: que es la clase que instancia la clase objeto costosa de generar
+- `PooledObject`: la clase que es costosa de inicializar o la que hay que limitar el número de instancias en la aplicación
+- `ObjectPool`: es la clase que gestiona la creación/reutilización/destrucción de los objetos de la `pila`.
+
+Imaginemos que debemos llevar el control de una serie de empleados (para asignarles tareas tendríamos que saber quiénes están ocupados/libres en cada momento). Podríamos aplicar este patrón para asignar tareas a empleados mientras tengamos alguno libre.
+
+

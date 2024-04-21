@@ -19,4 +19,5 @@ Route::get('/creational/builder', [\App\Http\Controllers\CreationalBuilder::clas
 Route::get('/creational/factory', [\App\Http\Controllers\CreationalFactory::class, 'index']);
 Route::get('/creational/prototype', [\App\Http\Controllers\CreationalPrototype::class, 'index']);
 Route::get('/creational/static-factory', [\App\Http\Controllers\CreationalStaticFactory::class, 'index']);
+Route::get('/creational/pool', [\App\Http\Controllers\CreationalPool::class, 'index']);
 
